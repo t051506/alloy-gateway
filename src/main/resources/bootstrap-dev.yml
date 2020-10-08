@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: alloy-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 120.79.94.56:8848
+        group: ALLOY
+        namespace: 50e447c9-4212-43f1-92c2-a76edcb195d7
+      config:
+        group: ${spring.cloud.nacos.discovery.group}
+        namespace: ${spring.cloud.nacos.discovery.namespace}
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        file-extension: yml
+        shared-configs:
+          - ${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+      username: nacos
+      password: nacos
+
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        #SECURITY 认证中心
+        - id: lorem-security
+          uri: lb://alloy-auth
+          predicates:
+            - Path=/auth/**
+          filters:
+            - PasswordDecoderFilter
+        #UCENTER 用户中心
+        - id: alloy-ucenter
+          uri: lb://lorem-ucenter
+          predicates:
+            - Path=/ucenter/**
+
+security:
+  encode:
+    # 密码密钥，必须16位
+    key: 'do***.plat4cloud'
+
+
