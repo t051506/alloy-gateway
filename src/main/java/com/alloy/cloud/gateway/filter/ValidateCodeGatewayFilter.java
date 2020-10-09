@@ -18,13 +18,12 @@
 
 package com.alloy.cloud.gateway.filter;
 
-import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.StrUtil;
 import com.alloy.cloud.common.core.base.R;
 import com.alloy.cloud.common.core.constant.CacheConstants;
 import com.alloy.cloud.common.core.constant.SecurityConstants;
-import com.alloy.cloud.common.core.exception.CheckedException;
 import com.alloy.cloud.common.core.exception.ValidateCodeException;
+import com.alloy.cloud.common.core.util.WebUtils;
 import com.alloy.cloud.gateway.config.IgnoreClientConfiguration;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,15 +34,12 @@ import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-
-import java.nio.charset.StandardCharsets;
 
 /**
  * 验证码处理
@@ -77,7 +73,7 @@ public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory {
 
             // 终端设置不校验， 直接向下执行
             try {
-                String[] clientInfos = getClientId(request);
+                String[] clientInfos = WebUtils.getClientId(request);
                 if (ignoreClient.getClients().contains(clientInfos[0])) {
                     return chain.filter(exchange);
                 }
@@ -150,29 +146,4 @@ public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory {
         redisTemplate.delete(key);
     }
 
-
-    @SneakyThrows
-    private String[] getClientId(ServerHttpRequest request) {
-        String header = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-
-        if (header == null || !header.startsWith("Basic ")) {
-            throw new CheckedException("请求头中client信息为空");
-        }
-        byte[] base64Token = header.substring(6).getBytes("UTF-8");
-        byte[] decoded;
-        try {
-            decoded = Base64.decode(base64Token);
-        } catch (IllegalArgumentException e) {
-            throw new CheckedException("Failed to decode basic authentication token");
-        }
-
-        String token = new String(decoded, StandardCharsets.UTF_8);
-
-        int delim = token.indexOf(":");
-
-        if (delim == -1) {
-            throw new CheckedException("Invalid basic authentication token");
-        }
-        return new String[]{token.substring(0, delim), token.substring(delim + 1)};
-    }
 }
