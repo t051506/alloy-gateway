@@ -21,35 +21,6 @@ spring:
       discovery:
         locator:
           enabled: true
-      globalcors:
-        cors-configurations:
-          '[/**]':
-            # 允许携带认证信息
-            # 允许跨域的源(网站域名/ip)，设置*为全部
-            # 允许跨域请求里的head字段，设置*为全部
-            # 允许跨域的method， 默认为GET和OPTIONS，设置*为全部
-            # 跨域允许的有效期
-            allow-credentials: true
-            allowed-origins:
-              - "http://alloy-auth:9998"
-              - "http://alloy-ucenter:9997"
-            allowed-headers: "*"
-            allowed-methods:
-              - POST
-              - GET
-              - DELETE
-              - PUT
-              - OPTION
-            max-age: 3600
-            # 允许response的head信息
-            # 默认仅允许如下6个：
-            #     Cache-Control
-            #     Content-Language
-            #     Content-Type
-            #     Expires
-            #     Last-Modified
-            #     Pragma
-            #exposed-headers:
       routes:
         # 认证中心
         - id: alloy-auth
