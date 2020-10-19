@@ -37,8 +37,10 @@ public class CloudRequestGlobalFilter implements GlobalFilter, Ordered {
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		// 1. 清洗请求头中from 参数
-		ServerHttpRequest request = exchange.getRequest().mutate()
-				.headers(httpHeaders -> httpHeaders.remove(SecurityConstants.FROM)).build();
+//		ServerHttpRequest request = exchange.getRequest().mutate()
+//				.headers(httpHeaders -> httpHeaders.remove(SecurityConstants.FROM)).build();
+
+		ServerHttpRequest request = exchange.getRequest().mutate().build();
 
 		// 2. 重写StripPrefix
 		addOriginalRequestUrl(exchange, request.getURI());
