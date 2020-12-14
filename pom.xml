@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.alloy.cloud</groupId>
         <artifactId>alloy-cloud-dependencies-parent</artifactId>
-        <version>Hoxton.SR6</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>alloy-gateway</artifactId>
@@ -23,12 +23,6 @@
             <groupId>com.alloy.cloud</groupId>
             <artifactId>alloy-common-sentinel</artifactId>
             <version>1.0.0-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.alloy.cloud</groupId>
-                    <artifactId>alloy-common-core</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <!--Lombok-->
         <dependency>
@@ -56,64 +50,27 @@
         <dependency>
             <groupId>com.github.whvcse</groupId>
             <artifactId>easy-captcha</artifactId>
-            <version>${captcha.version}</version>
+            <version>1.6.2</version>
         </dependency>
 
         <!--接口文档-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>${swagger.fox.version}</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>${swagger.fox.version}</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
     </dependencies>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!--spring cloud alibaba-->
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${spring-cloud-alibaba.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!--稳定版本，替代spring security bom内置-->
-            <dependency>
-                <groupId>org.springframework.security.oauth</groupId>
-                <artifactId>spring-security-oauth2</artifactId>
-                <version>${security.oauth.version}</version>
-            </dependency>
-            <!--swagger 最新依赖内置版本-->
-            <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-models</artifactId>
-                <version>${swagger.core.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>${swagger.core.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+
     <build>
         <plugins>
             <plugin>
