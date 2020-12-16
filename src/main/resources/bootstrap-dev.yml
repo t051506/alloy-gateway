@@ -54,6 +54,6 @@ spring:
 security:
   encode:
     # 前端密码密钥，必须16位
-    key: 'thanks,pig4cloud'
+    key: 'swordfish..steak'
 
 
