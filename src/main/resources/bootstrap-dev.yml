@@ -56,4 +56,11 @@ security:
     # 前端密码密钥，必须16位
     key: 'swordfish..steak'
 
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always

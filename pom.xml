@@ -46,6 +46,12 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
+        <!--springboot admin-->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.github.whvcse/easy-captcha -->
         <dependency>
             <groupId>com.github.whvcse</groupId>
